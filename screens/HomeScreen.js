@@ -70,15 +70,6 @@ const HomeScreen = () => {
             />
           ))}
         </ScrollView>
-        <View style={styles.wrapDot}>
-          {moviesImages.map((image, index) => (
-            <Text
-              key={image}
-              style={imgAcitive == index ? styles.dotActive : styles.dot}>
-              ⬤
-            </Text>
-          ))}
-        </View>
       </View>
       {/* <SliderBox images={moviesImages} /> */}
     </SafeAreaView>
