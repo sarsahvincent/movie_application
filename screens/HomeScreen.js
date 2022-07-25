@@ -48,13 +48,7 @@ const HomeScreen = () => {
       });
     getPopularMovies()
       .then(allMovies => {
-        let moviesImagesArray = [];
-        allMovies.forEach(movie => {
-          moviesImagesArray.push(
-            'https://image.tmdb.org/t/p/w500' + movie.poster_path,
-          );
-        });
-        setPopularMovie(moviesImagesArray);
+        setPopularMovie(allMovies);
       })
       .catch(error => {
         console.log(error);
@@ -80,9 +74,7 @@ const HomeScreen = () => {
           ))}
         </ScrollView>
       </View>
-      <View style={styles.carousel}>
-        <List title="Popular Movies" content={popularMovie} />
-      </View>
+      <List title="Popular Movies" content={popularMovie} />
     </SafeAreaView>
   );
 };
@@ -95,7 +87,7 @@ const styles = StyleSheet.create({
   },
   wrap: {
     width: WIDTH,
-    height: HEIGHT * 0.7,
+    height: HEIGHT * 0.6,
   },
 
   wrapDot: {
