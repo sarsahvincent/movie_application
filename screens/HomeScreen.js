@@ -22,6 +22,7 @@ import {
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
+
 const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
@@ -125,7 +126,6 @@ const HomeScreen = () => {
               style={styles.wrap}>
               {moviesImages?.map((image, index) => (
                 <Image
-                  k
                   key={index}
                   resizeMode="stretch"
                   style={styles.wrap}
