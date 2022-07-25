@@ -8,8 +8,9 @@ import {
   View,
   ScrollView,
   Image,
+  FlatList,
 } from 'react-native';
-
+import List from '../components/List';
 import {getPopularMovies, getUpcomingMovies} from '../services/Services';
 
 const WIDTH = Dimensions.get('window').width;
@@ -19,7 +20,7 @@ const HomeScreen = () => {
   const [movies, setMovies] = useState([]);
   const [imgAcitive, setImgAcitive] = useState(0);
   const [moviesImages, setMoviesImages] = useState([]);
-  console.log('moviesImages', moviesImages);
+  const [popularMovie, setPopularMovie] = useState([]);
   const onChange = nativeEvent => {
     if (nativeEvent) {
       const slide = Math.ceil(
@@ -31,11 +32,6 @@ const HomeScreen = () => {
     }
   };
 
-  const imaggg = [
-    'https://img.freepik.com/free-vector/spring-flower-collection_23-2148853687.jpg?w=2000',
-    'https://images.unsplash.com/photo-1560790671-b76ca4de55ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlL',
-    'https://media.istockphoto.com/vectors/retro-delicate-wedding-card-with-pink-watercolor-texture-and-flowers-vector-id1294181713?k=20&m=1294181713&s=612x612&w=0&h=DDI5NgivZ3IfStpbiXqiPpkII92KlGnEG8-FSUry3aY=',
-  ];
   useEffect(() => {
     getUpcomingMovies()
       .then(allMovies => {
@@ -46,6 +42,19 @@ const HomeScreen = () => {
           );
         });
         setMoviesImages(moviesImagesArray);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    getPopularMovies()
+      .then(allMovies => {
+        let moviesImagesArray = [];
+        allMovies.forEach(movie => {
+          moviesImagesArray.push(
+            'https://image.tmdb.org/t/p/w500' + movie.poster_path,
+          );
+        });
+        setPopularMovie(moviesImagesArray);
       })
       .catch(error => {
         console.log(error);
@@ -71,7 +80,9 @@ const HomeScreen = () => {
           ))}
         </ScrollView>
       </View>
-      {/* <SliderBox images={moviesImages} /> */}
+      <View style={styles.carousel}>
+        <List title="Popular Movies" content={popularMovie} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -84,8 +95,9 @@ const styles = StyleSheet.create({
   },
   wrap: {
     width: WIDTH,
-    height: HEIGHT * 0.4,
+    height: HEIGHT * 0.7,
   },
+
   wrapDot: {
     position: 'absolute',
     bottom: 0,
