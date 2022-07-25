@@ -21,7 +21,7 @@ const List = props => {
       <View>
         <Text style={styles.text}>{title}</Text>
       </View>
-      <View style={styles.carousel}>
+      <View>
         <FlatList
           renderItem={({item}) => <Card item={item} />}
           horizontal={true}
@@ -39,13 +39,12 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 10,
   },
-  carousel: {
-    width: WIDTH,
-    height: HEIGHT * 0.2,
-  },
+
   text: {
     fontSize: 20,
     fontWeight: 'bold',
     paddingBottom: 20,
+    marginLeft: 5,
+    color: 'black',
   },
 });

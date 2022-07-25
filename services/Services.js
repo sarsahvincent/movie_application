@@ -17,7 +17,22 @@ export const getUpcomingMovies = async () => {
   return resp?.data?.results;
 };
 //Get upcoming TV
-export const gegPopularTV = async () => {
+export const getPopularTV = async () => {
   const resp = await axios.get(`${apiUrl}/tv/popular?api_key=${apiKey}`);
+  return resp?.data?.results;
+};
+
+//Get Family movies
+export const getFamilyMovies = async () => {
+  const resp = await axios.get(
+    `${apiUrl}/discover/movie?api_key=${apiKey}&with_genres=10751`,
+  );
+  return resp?.data?.results;
+};
+//Get Music movies
+export const getMusicMovies = async () => {
+  const resp = await axios.get(
+    `${apiUrl}/discover/movie?api_key=${apiKey}&with_genres=10402`,
+  );
   return resp?.data?.results;
 };
