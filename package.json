@@ -11,11 +11,22 @@
   },
   "dependencies": {
     "@homielab/react-native-auto-scroll": "^0.0.8",
+    "@react-navigation/native": "^6.0.11",
+    "@react-navigation/native-stack": "^6.7.0",
     "axios": "^0.27.2",
+    "date-and-time": "^2.4.1",
+    "date-format": "^4.0.13",
+    "install": "^0.13.0",
+    "moment": "^2.29.4",
     "react": "18.0.0",
     "react-native": "0.69.2",
     "react-native-auto-scrolling": "^3.0.2",
+    "react-native-ratings": "^8.1.0",
+    "react-native-safe-area-context": "^4.3.1",
+    "react-native-screens": "^3.15.0",
     "react-native-snap-carousel": "^3.9.1",
+    "react-native-star-rating": "^1.1.0",
+    "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.2"
   },
   "devDependencies": {

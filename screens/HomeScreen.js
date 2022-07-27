@@ -2,14 +2,13 @@
 import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
-  Text,
   SafeAreaView,
   Dimensions,
   View,
   ScrollView,
   Image,
-  FlatList,
   ActivityIndicator,
+  Button,
 } from 'react-native';
 import List from '../components/List';
 import {
@@ -19,19 +18,20 @@ import {
   getFamilyMovies,
   getMusicMovies,
 } from '../services/Services';
+import Error from '../components/Error';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
   const [imgAcitive, setImgAcitive] = useState(0);
   const [moviesImages, setMoviesImages] = useState();
   const [popularMovie, setPopularMovie] = useState();
   const [familyMovies, setFamilyMovies] = useState();
   const [musicMovies, setMusicMovies] = useState();
   const [popularTV, setPopularTV] = useState();
+  const [error, setError] = useState(false);
   const onChange = nativeEvent => {
     if (nativeEvent) {
       const slide = Math.ceil(
@@ -65,45 +65,45 @@ const HomeScreen = () => {
         setMoviesImages(moviesImagesArray);
         setLoading(false);
       })
-      .catch(error => {
+      .catch(() => {
+        setError(true);
         setLoading(false);
-        console.log(error);
       });
     getPopularMovies()
       .then(allMovies => {
         setPopularMovie(allMovies);
         setLoading(false);
       })
-      .catch(error => {
+      .catch(() => {
         setLoading(false);
-        console.log(error);
+        setError(true);
       });
     getPopularTV()
       .then(allMovies => {
         setPopularTV(allMovies);
         setLoading(false);
       })
-      .catch(error => {
+      .catch(() => {
         setLoading(false);
-        console.log(error);
+        setError(true);
       });
     getFamilyMovies()
       .then(allMovies => {
         setFamilyMovies(allMovies);
         setLoading(false);
       })
-      .catch(error => {
+      .catch(() => {
+        setError(true);
         setLoading(false);
-        console.log(error);
       });
     getMusicMovies()
       .then(allMovies => {
         setMusicMovies(allMovies);
         setLoading(false);
       })
-      .catch(error => {
+      .catch(() => {
         setLoading(false);
-        console.log(error);
+        setError(true);
       });
   }, []);
 
@@ -116,33 +116,57 @@ const HomeScreen = () => {
   } else {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.wrap}>
-            <ScrollView
-              onScroll={({nativeEvent}) => onChange(nativeEvent)}
-              showsHorizontalScrollIndicator={false}
-              pagingEnabled
-              horizontal
-              style={styles.wrap}>
-              {moviesImages?.map((image, index) => (
-                <Image
-                  key={index}
-                  resizeMode="stretch"
-                  style={styles.wrap}
-                  source={{uri: image}}
-                />
-              ))}
-            </ScrollView>
-          </View>
-          {popularMovie && (
-            <List title="Popular Movies" content={popularMovie} />
-          )}
-          {popularTV && <List title="Popular TV Shows" content={popularTV} />}
-          {familyMovies && (
-            <List title="Family Movies" content={familyMovies} />
-          )}
-          {musicMovies && <List title="Music Movies" content={musicMovies} />}
-        </ScrollView>
+        {error && <Error />}
+        {!error && !loading && (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.wrap}>
+              <ScrollView
+                onScroll={({nativeEvent}) => onChange(nativeEvent)}
+                showsHorizontalScrollIndicator={false}
+                pagingEnabled
+                horizontal
+                style={styles.wrap}>
+                {moviesImages?.map((image, index) => (
+                  <Image
+                    key={index}
+                    resizeMode="stretch"
+                    style={styles.wrap}
+                    source={{uri: image}}
+                  />
+                ))}
+              </ScrollView>
+            </View>
+
+            {popularMovie && (
+              <List
+                navigation={navigation}
+                title="Popular Movies"
+                content={popularMovie}
+              />
+            )}
+            {popularTV && (
+              <List
+                navigation={navigation}
+                title="Popular TV Shows"
+                content={popularTV}
+              />
+            )}
+            {familyMovies && (
+              <List
+                navigation={navigation}
+                title="Family Movies"
+                content={familyMovies}
+              />
+            )}
+            {musicMovies && (
+              <List
+                navigation={navigation}
+                title="Music Movies"
+                content={musicMovies}
+              />
+            )}
+          </ScrollView>
+        )}
       </SafeAreaView>
     );
   }

@@ -1,10 +1,16 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
-const placeholderImage = require('./assets/images/movie_placeholder.jpeg');
-const Card = ({item}) => {
+const placeholderImage = require('../assets/images/movie_placeholder.jpeg');
+const Card = ({item, navigation}) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Details', {
+          item,
+        })
+      }
+      style={styles.container}>
       <Image
         resizeMode="cover"
         style={styles.image}

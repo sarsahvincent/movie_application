@@ -1,21 +1,11 @@
 /* eslint-disable prettier/prettier */
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  Dimensions,
-  View,
-  ScrollView,
-  Image,
-  FlatList,
-} from 'react-native';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import React from 'react';
-import Card from '../screens/Card';
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
+import Card from './Card';
+
 const List = props => {
-  const {title, content} = props;
-  console.log('content', content);
+  const {title, content, navigation} = props;
+
   return (
     <View style={styles.container}>
       <View>
@@ -23,7 +13,7 @@ const List = props => {
       </View>
       <View>
         <FlatList
-          renderItem={({item}) => <Card item={item} />}
+          renderItem={({item}) => <Card navigation={navigation} item={item} />}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={content}
